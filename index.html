@@ -13,6 +13,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600&display=swap"
     rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23060708'/><text x='4' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%2327e08a'>%3E_</text></svg>" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -494,7 +495,7 @@
                     <p>Autonomous pipeline turning commits into production-ready releases — engineered, not configured.</p>
                   </div>
                 </div>
-                <a className="btn btn-sm btn-ghost" href="#projects">See the build {I.arrow({ className: "arr", style: { width: 15, height: 15 } })}</a>
+                <a className="btn btn-sm btn-ghost" href="https://autopilot-ai.up.railway.app/" target="_blank" rel="noreferrer">See the build {I.arrowUR({ className: "arr", style: { width: 15, height: 15 } })}</a>
               </div>
             </R>
           </div>
@@ -542,7 +543,10 @@
 
     const PROJECTS = [
       {
-        kind: "AI Systems", stack: ["Python", "LLM", "CI/CD"], name: "AutoPilot CI/CD Pipeline", feat: true, bullets: [
+        kind: "AI Systems", stack: ["Python", "LLM", "CI/CD"], name: "AutoPilot CI/CD Pipeline", feat: true,
+        repo: "https://github.com/Hariharan0-h/autopilot-ci",
+        live: "https://autopilot-ai.up.railway.app/",
+        bullets: [
           <>Autonomous pipeline that converts <b>commits → production-ready releases</b> with zero hand-holding.</>,
           <>AI-based validation workflows that <b>cut manual intervention</b> across the release path.</>,
           <>End-to-end <b>system design + automation</b> — gating, testing, and deploy in one loop.</>,
@@ -550,37 +554,51 @@
         ]
       },
       {
-        kind: "Enterprise BI", stack: [".NET", "Angular", "SQL"], name: "BI Tool — DBMS", bullets: [
+        kind: "Enterprise BI", stack: [".NET", "Angular", "SQL"], name: "BI Tool — DBMS",
+        repo: "https://github.com/Hariharan0-h/Eyenotes.AuroBi",
+        bullets: [
           <>Enterprise analytics system with <b>optimized data pipelines</b>.</>,
           <>Built for <b>performance, reporting & scalability</b> at volume.</>,
         ]
       },
       {
-        kind: "SaaS", stack: ["Next.js", "Git API"], name: "Git Archeologist", bullets: [
+        kind: "SaaS", stack: ["Next.js", "Git API"], name: "Git Archeologist",
+        repo: null,
+        bullets: [
           <>Extracts insight from <b>git history</b> at the repo level.</>,
           <>Surfaces <b>contribution patterns</b> teams can act on.</>,
         ]
       },
       {
-        kind: "AI Product", stack: ["Python", "LLM"], name: "Odin AI Chatbot", bullets: [
+        kind: "AI Product", stack: ["Python", "LLM"], name: "Odin AI Chatbot",
+        repo: "https://github.com/Hariharan0-h/Odin.Ai",
+        bullets: [
           <>Chat interface with an <b>inbuilt LLM</b> integration.</>,
           <>Demonstrates real <b>AI product</b> wiring, not a demo wrapper.</>,
         ]
       },
       {
-        kind: "Frontend", stack: ["Angular"], name: "Editor Component", bullets: [
+        kind: "Frontend", stack: ["Angular"], name: "Editor Component",
+        repo: "https://github.com/Hariharan0-h/EditorFinal",
+        bullets: [
           <>Custom <b>MS Word-like</b> rich text editor.</>,
           <>Advanced formatting, built as a reusable component.</>,
         ]
       },
       {
-        kind: "Web App", stack: ["React.js"], name: "RedBlogs", bullets: [
+        kind: "Web App", stack: ["React.js"], name: "RedBlogs",
+        repo: null,
+        live: "https://redscribe-hub.lovable.app/",
+        bullets: [
           <>Blogging platform with full <b>content management</b>.</>,
           <>Authoring, publishing and feed in one app.</>,
         ]
       },
       {
-        kind: "Mobile", stack: ["React Native"], name: "Iyal Green Farming App", bullets: [
+        kind: "Mobile", stack: ["React Native"], name: "Iyal Green Farming App",
+        repo: "https://github.com/abcdefj0052/iyal",
+        live: "https://abcdefj0052.github.io/iyal/",
+        bullets: [
           <>Community platform for <b>sustainable agriculture</b>.</>,
           <>Connects growers around shared practices.</>,
         ]
@@ -607,9 +625,18 @@
                     {p.bullets.map((b, j) => <li key={j}><span className="b">›</span><span>{b}</span></li>)}
                   </ul>
                   <div className="card-foot">
-                    <a className="card-link" href={LINKS.github} target="_blank" rel="noreferrer">
-                      view source {I.arrowUR({ style: { width: 14, height: 14 } })}
-                    </a>
+                    <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
+                      {p.repo && (
+                        <a className="card-link" href={p.repo} target="_blank" rel="noreferrer">
+                          view source {I.arrowUR({ style: { width: 14, height: 14 } })}
+                        </a>
+                      )}
+                      {p.live && (
+                        <a className="card-link" href={p.live} target="_blank" rel="noreferrer" style={{ color: "var(--accent)" }}>
+                          live demo {I.arrowUR({ style: { width: 14, height: 14 } })}
+                        </a>
+                      )}
+                    </div>
                     <span className="card-tag">{p.kind.toLowerCase().replace(/ /g, "_")}</span>
                   </div>
                 </article>
