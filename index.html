@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="green" data-density="regular" data-motion="moderate">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hariharan — Full Stack Developer</title>
+  <meta name="description"
+    content="Full Stack Developer · Scalable Systems · AI + Backend Engineering. Built high-scale healthcare systems serving 200+ concurrent users with 99.9% uptime." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body data-scanlines="0">
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+    integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+    integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+    integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+    crossorigin="anonymous"></script>
+
+  <!-- tweaks-panel -->
+  <script type="text/babel">
+    const __TWEAKS_STYLE = `
+  .twk-panel{position:fixed;right:16px;bottom:16px;z-index:2147483646;width:280px;
+    max-height:calc(100vh - 32px);display:flex;flex-direction:column;
+    transform:scale(var(--dc-inv-zoom,1));transform-origin:bottom right;
+    background:rgba(250,249,247,.78);color:#29261b;
+    -webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);
+    border:.5px solid rgba(255,255,255,.6);border-radius:14px;
+    box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 12px 40px rgba(0,0,0,.18);
+    font:11.5px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif;overflow:hidden}
+  .twk-hd{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 8px 10px 14px;cursor:move;user-select:none}
+  .twk-hd b{font-size:12px;font-weight:600;letter-spacing:.01em}
+  .twk-x{appearance:none;border:0;background:transparent;color:rgba(41,38,27,.55);
+    width:22px;height:22px;border-radius:6px;cursor:default;font-size:13px;line-height:1}
+  .twk-x:hover{background:rgba(0,0,0,.06);color:#29261b}
+  .twk-body{padding:2px 14px 14px;display:flex;flex-direction:column;gap:10px;
+    overflow-y:auto;overflow-x:hidden;min-height:0;
+    scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.15) transparent}
+  .twk-body::-webkit-scrollbar{width:8px}
+  .twk-body::-webkit-scrollbar-track{background:transparent;margin:2px}
+  .twk-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:4px;
+    border:2px solid transparent;background-clip:content-box}
+  .twk-body::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.25);
+    border:2px solid transparent;background-clip:content-box}
+  .twk-row{display:flex;flex-direction:column;gap:5px}
+  .twk-row-h{flex-direction:row;align-items:center;justify-content:space-between;gap:10px}
+  .twk-lbl{display:flex;justify-content:space-between;align-items:baseline;
+    color:rgba(41,38,27,.72)}
+  .twk-lbl>span:first-child{font-weight:500}
+  .twk-val{color:rgba(41,38,27,.5);font-variant-numeric:tabular-nums}
+  .twk-sect{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    color:rgba(41,38,27,.45);padding:10px 0 0}
+  .twk-sect:first-child{padding-top:0}
+  .twk-field{appearance:none;box-sizing:border-box;width:100%;min-width:0;height:26px;padding:0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;
+    background:rgba(255,255,255,.6);color:inherit;font:inherit;outline:none}
+  .twk-field:focus{border-color:rgba(0,0,0,.25);background:rgba(255,255,255,.85)}
+  select.twk-field{padding-right:22px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='rgba(0,0,0,.5)' d='M0 0h10L5 6z'/></svg>");
+    background-repeat:no-repeat;background-position:right 8px center}
+  .twk-slider{appearance:none;-webkit-appearance:none;width:100%;height:4px;margin:6px 0;
+    border-radius:999px;background:rgba(0,0,0,.12);outline:none}
+  .twk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
+    width:14px;height:14px;border-radius:50%;background:#fff;
+    border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+  .twk-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
+    background:#fff;border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+  .twk-seg{position:relative;display:flex;padding:2px;border-radius:8px;
+    background:rgba(0,0,0,.06);user-select:none}
+  .twk-seg-thumb{position:absolute;top:2px;bottom:2px;border-radius:6px;
+    background:rgba(255,255,255,.9);box-shadow:0 1px 2px rgba(0,0,0,.12);
+    transition:left .15s cubic-bezier(.3,.7,.4,1),width .15s}
+  .twk-seg.dragging .twk-seg-thumb{transition:none}
+  .twk-seg button{appearance:none;position:relative;z-index:1;flex:1;border:0;
+    background:transparent;color:inherit;font:inherit;font-weight:500;min-height:22px;
+    border-radius:6px;cursor:default;padding:4px 6px;line-height:1.2;overflow-wrap:anywhere}
+  .twk-toggle{position:relative;width:32px;height:18px;border:0;border-radius:999px;
+    background:rgba(0,0,0,.15);transition:background .15s;cursor:default;padding:0}
+  .twk-toggle[data-on="1"]{background:#34c759}
+  .twk-toggle i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+    background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+  .twk-toggle[data-on="1"] i{transform:translateX(14px)}
+  .twk-num{display:flex;align-items:center;box-sizing:border-box;min-width:0;height:26px;padding:0 0 0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;background:rgba(255,255,255,.6)}
+  .twk-num-lbl{font-weight:500;color:rgba(41,38,27,.6);cursor:ew-resize;user-select:none;padding-right:8px}
+  .twk-num input{flex:1;min-width:0;height:100%;border:0;background:transparent;
+    font:inherit;font-variant-numeric:tabular-nums;text-align:right;padding:0 8px 0 0;
+    outline:none;color:inherit;-moz-appearance:textfield}
+  .twk-num input::-webkit-inner-spin-button,.twk-num input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+  .twk-num-unit{padding-right:8px;color:rgba(41,38,27,.45)}
+  .twk-btn{appearance:none;height:26px;padding:0 12px;border:0;border-radius:7px;
+    background:rgba(0,0,0,.78);color:#fff;font:inherit;font-weight:500;cursor:default}
+  .twk-btn:hover{background:rgba(0,0,0,.88)}
+  .twk-btn.secondary{background:rgba(0,0,0,.06);color:inherit}
+  .twk-btn.secondary:hover{background:rgba(0,0,0,.1)}
+  .twk-swatch{appearance:none;-webkit-appearance:none;width:56px;height:22px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:6px;padding:0;cursor:default;background:transparent;flex-shrink:0}
+  .twk-swatch::-webkit-color-swatch-wrapper{padding:0}
+  .twk-swatch::-webkit-color-swatch{border:0;border-radius:5.5px}
+  .twk-swatch::-moz-color-swatch{border:0;border-radius:5.5px}
+  .twk-chips{display:flex;gap:6px}
+  .twk-chip{position:relative;appearance:none;flex:1;min-width:0;height:46px;
+    padding:0;border:0;border-radius:6px;overflow:hidden;cursor:default;
+    box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.06);
+    transition:transform .12s cubic-bezier(.3,.7,.4,1),box-shadow .12s}
+  .twk-chip:hover{transform:translateY(-1px);box-shadow:0 0 0 .5px rgba(0,0,0,.18),0 4px 10px rgba(0,0,0,.12)}
+  .twk-chip[data-on="1"]{box-shadow:0 0 0 1.5px rgba(0,0,0,.85),0 2px 6px rgba(0,0,0,.15)}
+  .twk-chip>span{position:absolute;top:0;bottom:0;right:0;width:34%;
+    display:flex;flex-direction:column;box-shadow:-1px 0 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i{flex:1;box-shadow:0 -1px 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i:first-child{box-shadow:none}
+  .twk-chip svg{position:absolute;top:6px;left:6px;width:13px;height:13px;
+    filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+`;
+
+    function useTweaks(defaults) {
+      const [values, setValues] = React.useState(defaults);
+      const setTweak = React.useCallback((keyOrEdits, val) => {
+        const edits = typeof keyOrEdits === 'object' && keyOrEdits !== null
+          ? keyOrEdits : { [keyOrEdits]: val };
+        setValues((prev) => ({ ...prev, ...edits }));
+        window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
+        window.dispatchEvent(new CustomEvent('tweakchange', { detail: edits }));
+      }, []);
+      return [values, setTweak];
+    }
+
+    function TweaksPanel({ title = 'Tweaks', children }) {
+      const [open, setOpen] = React.useState(false);
+      const dragRef = React.useRef(null);
+      const offsetRef = React.useRef({ x: 16, y: 16 });
+      const PAD = 16;
+      const clampToViewport = React.useCallback(() => {
+        const panel = dragRef.current;
+        if (!panel) return;
+        const w = panel.offsetWidth, h = panel.offsetHeight;
+        const maxRight = Math.max(PAD, window.innerWidth - w - PAD);
+        const maxBottom = Math.max(PAD, window.innerHeight - h - PAD);
+        offsetRef.current = {
+          x: Math.min(maxRight, Math.max(PAD, offsetRef.current.x)),
+          y: Math.min(maxBottom, Math.max(PAD, offsetRef.current.y)),
+        };
+        panel.style.right = offsetRef.current.x + 'px';
+        panel.style.bottom = offsetRef.current.y + 'px';
+      }, []);
+      React.useEffect(() => {
+        if (!open) return;
+        clampToViewport();
+        if (typeof ResizeObserver === 'undefined') {
+          window.addEventListener('resize', clampToViewport);
+          return () => window.removeEventListener('resize', clampToViewport);
+        }
+        const ro = new ResizeObserver(clampToViewport);
+        ro.observe(document.documentElement);
+        return () => ro.disconnect();
+      }, [open, clampToViewport]);
+      React.useEffect(() => {
+        const onMsg = (e) => {
+          const t = e?.data?.type;
+          if (t === '__activate_edit_mode') setOpen(true);
+          else if (t === '__deactivate_edit_mode') setOpen(false);
+        };
+        window.addEventListener('message', onMsg);
+        window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+        return () => window.removeEventListener('message', onMsg);
+      }, []);
+      const dismiss = () => { setOpen(false); window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*'); };
+      const onDragStart = (e) => {
+        const panel = dragRef.current;
+        if (!panel) return;
+        const r = panel.getBoundingClientRect();
+        const sx = e.clientX;
+        const startRight = window.innerWidth - r.right;
+        const startBottom = window.innerHeight - r.bottom;
+        const move = (ev) => {
+          offsetRef.current = { x: startRight - (ev.clientX - sx), y: startBottom - (ev.clientY - e.clientY) };
+          clampToViewport();
+        };
+        const up = () => { window.removeEventListener('mousemove', move); window.removeEventListener('mouseup', up); };
+        window.addEventListener('mousemove', move);
+        window.addEventListener('mouseup', up);
+      };
+      if (!open) return null;
+      return (
+        <>
+          <style>{__TWEAKS_STYLE}</style>
+          <div ref={dragRef} className="twk-panel" style={{ right: offsetRef.current.x, bottom: offsetRef.current.y }}>
+            <div className="twk-hd" onMouseDown={onDragStart}>
+              <b>{title}</b>
+              <button className="twk-x" aria-label="Close" onMouseDown={(e) => e.stopPropagation()} onClick={dismiss}>✕</button>
+            </div>
+            <div className="twk-body">{children}</div>
+          </div>
+        </>
+      );
+    }
+
+    function TweakSection({ label }) {
+      return <div className="twk-sect">{label}</div>;
+    }
+
+    function TweakRow({ label, value, children, inline = false }) {
+      return (
+        <div className={inline ? 'twk-row twk-row-h' : 'twk-row'}>
+          <div className="twk-lbl">
+            <span>{label}</span>
+            {value != null && <span className="twk-val">{value}</span>}
+          </div>
+          {children}
+        </div>
+      );
+    }
+
+    function TweakSlider({ label, value, min = 0, max = 100, step = 1, unit = '', onChange }) {
+      return (
+        <TweakRow label={label} value={`${value}${unit}`}>
+          <input type="range" className="twk-slider" min={min} max={max} step={step}
+            value={value} onChange={(e) => onChange(Number(e.target.value))} />
+        </TweakRow>
+      );
+    }
+
+    function TweakToggle({ label, value, onChange }) {
+      return (
+        <div className="twk-row twk-row-h">
+          <div className="twk-lbl"><span>{label}</span></div>
+          <button type="button" className="twk-toggle" data-on={value ? '1' : '0'}
+            role="switch" aria-checked={!!value} onClick={() => onChange(!value)}><i /></button>
+        </div>
+      );
+    }
+
+    function TweakSelect({ label, value, options, onChange }) {
+      return (
+        <TweakRow label={label}>
+          <select className="twk-field" value={value} onChange={(e) => onChange(e.target.value)}>
+            {options.map((o) => {
+              const v = typeof o === 'object' ? o.value : o;
+              const l = typeof o === 'object' ? o.label : o;
+              return <option key={v} value={v}>{l}</option>;
+            })}
+          </select>
+        </TweakRow>
+      );
+    }
+
+    function TweakRadio({ label, value, options, onChange }) {
+      const trackRef = React.useRef(null);
+      const [dragging, setDragging] = React.useState(false);
+      const valueRef = React.useRef(value);
+      valueRef.current = value;
+      const labelLen = (o) => String(typeof o === 'object' ? o.label : o).length;
+      const maxLen = options.reduce((m, o) => Math.max(m, labelLen(o)), 0);
+      const fitsAsSegments = maxLen <= ({ 2: 16, 3: 10 }[options.length] ?? 0);
+      if (!fitsAsSegments) {
+        const resolve = (s) => {
+          const m = options.find((o) => String(typeof o === 'object' ? o.value : o) === s);
+          return m === undefined ? s : typeof m === 'object' ? m.value : m;
+        };
+        return <TweakSelect label={label} value={value} options={options} onChange={(s) => onChange(resolve(s))} />;
+      }
+      const opts = options.map((o) => (typeof o === 'object' ? o : { value: o, label: o }));
+      const idx = Math.max(0, opts.findIndex((o) => o.value === value));
+      const n = opts.length;
+      const segAt = (clientX) => {
+        const r = trackRef.current.getBoundingClientRect();
+        const i = Math.floor(((clientX - r.left - 2) / (r.width - 4)) * n);
+        return opts[Math.max(0, Math.min(n - 1, i))].value;
+      };
+      const onPointerDown = (e) => {
+        setDragging(true);
+        const v0 = segAt(e.clientX);
+        if (v0 !== valueRef.current) onChange(v0);
+        const move = (ev) => { if (!trackRef.current) return; const v = segAt(ev.clientX); if (v !== valueRef.current) onChange(v); };
+        const up = () => { setDragging(false); window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', up);
+      };
+      return (
+        <TweakRow label={label}>
+          <div ref={trackRef} role="radiogroup" onPointerDown={onPointerDown} className={dragging ? 'twk-seg dragging' : 'twk-seg'}>
+            <div className="twk-seg-thumb" style={{ left: `calc(2px + ${idx} * (100% - 4px) / ${n})`, width: `calc((100% - 4px) / ${n})` }} />
+            {opts.map((o) => <button key={o.value} type="button" role="radio" aria-checked={o.value === value}>{o.label}</button>)}
+          </div>
+        </TweakRow>
+      );
+    }
+
+    function __twkIsLight(hex) {
+      const h = String(hex).replace('#', '');
+      const x = h.length === 3 ? h.replace(/./g, (c) => c + c) : h.padEnd(6, '0');
+      const n = parseInt(x.slice(0, 6), 16);
+      if (Number.isNaN(n)) return true;
+      const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+      return r * 299 + g * 587 + b * 114 > 148000;
+    }
+
+    const __TwkCheck = ({ light }) => (
+      <svg viewBox="0 0 14 14" aria-hidden="true">
+        <path d="M3 7.2 5.8 10 11 4.2" fill="none" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
+          stroke={light ? 'rgba(0,0,0,.78)' : '#fff'} />
+      </svg>
+    );
+
+    function TweakColor({ label, value, options, onChange }) {
+      if (!options || !options.length) {
+        return (
+          <div className="twk-row twk-row-h">
+            <div className="twk-lbl"><span>{label}</span></div>
+            <input type="color" className="twk-swatch" value={value} onChange={(e) => onChange(e.target.value)} />
+          </div>
+        );
+      }
+      const key = (o) => String(JSON.stringify(o)).toLowerCase();
+      const cur = key(value);
+      return (
+        <TweakRow label={label}>
+          <div className="twk-chips" role="radiogroup">
+            {options.map((o, i) => {
+              const colors = Array.isArray(o) ? o : [o];
+              const [hero, ...rest] = colors;
+              const sup = rest.slice(0, 4);
+              const on = key(o) === cur;
+              return (
+                <button key={i} type="button" className="twk-chip" role="radio"
+                  aria-checked={on} data-on={on ? '1' : '0'}
+                  style={{ background: hero }} onClick={() => onChange(o)}>
+                  {sup.length > 0 && <span>{sup.map((c, j) => <i key={j} style={{ background: c }} />)}</span>}
+                  {on && <__TwkCheck light={__twkIsLight(hero)} />}
+                </button>
+              );
+            })}
+          </div>
+        </TweakRow>
+      );
+    }
+
+    function TweakButton({ label, onClick, secondary = false }) {
+      return <button type="button" className={secondary ? 'twk-btn secondary' : 'twk-btn'} onClick={onClick}>{label}</button>;
+    }
+
+    Object.assign(window, { useTweaks, TweaksPanel, TweakSection, TweakRow, TweakSlider, TweakToggle, TweakRadio, TweakSelect, TweakColor, TweakButton });
+  </script>
+
+  <!-- sections -->
+  <script type="text/babel">
+    const I = {
+      github: (p) => (<svg viewBox="0 0 24 24" fill="currentColor" {...p}><path d="M12 1.5A10.5 10.5 0 0 0 8.68 22c.53.1.72-.23.72-.5v-1.8c-2.92.63-3.54-1.4-3.54-1.4-.48-1.22-1.17-1.55-1.17-1.55-.96-.65.07-.64.07-.64 1.06.08 1.62 1.09 1.62 1.09.94 1.62 2.47 1.15 3.07.88.1-.68.37-1.15.67-1.42-2.33-.27-4.78-1.17-4.78-5.2 0-1.15.41-2.09 1.08-2.83-.11-.27-.47-1.34.1-2.8 0 0 .88-.28 2.88 1.08a9.9 9.9 0 0 1 5.24 0c2-1.36 2.88-1.08 2.88-1.08.57 1.46.21 2.53.1 2.8.67.74 1.08 1.68 1.08 2.83 0 4.04-2.46 4.93-4.8 5.19.38.33.71.97.71 1.96v2.9c0 .28.19.61.73.5A10.5 10.5 0 0 0 12 1.5Z" /></svg>),
+      linkedin: (p) => (<svg viewBox="0 0 24 24" fill="currentColor" {...p}><path d="M4.98 3.5A2.5 2.5 0 1 1 2.5 6 2.5 2.5 0 0 1 4.98 3.5ZM3 8.5h4v12H3v-12Zm6.5 0h3.83v1.64h.05A4.2 4.2 0 0 1 17.2 8.2c4.1 0 4.86 2.7 4.86 6.2v6.1h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.07 1.4-2.07 2.85v5.5h-4v-12Z" /></svg>),
+      mail: (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...p}><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>),
+      phone: (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...p}><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L16 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" /></svg>),
+      arrow: (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" {...p}><path d="M5 12h14M13 6l6 6-6 6" /></svg>),
+      arrowUR: (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" {...p}><path d="M7 17 17 7M8 7h9v9" /></svg>),
+      download: (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...p}><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" /></svg>),
+      top: (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" {...p}><path d="M12 19V5m0 0-6 6m6-6 6 6" /></svg>),
+    };
+
+    const LINKS = {
+      github: "https://github.com/Hariharan0-h",
+      linkedin: "https://www.linkedin.com/in/hariharan-m-075373246",
+      email: "100hariharan@gmail.com",
+      phone: "+91 96261 48605",
+    };
+
+    function R({ as: Tag = "div", className = "", stagger = false, children, ...rest }) {
+      return <Tag className={`${stagger ? "stagger" : "reveal"} ${className}`} {...rest}>{children}</Tag>;
+    }
+
+    function Eyebrow({ idx, children }) {
+      return (
+        <div className="eyebrow">
+          <span className="idx">{idx}</span>
+          <span>{children}</span>
+          <span className="ln" />
+        </div>
+      );
+    }
+
+    function Nav() {
+      return (
+        <nav className="nav" id="nav">
+          <div className="wrap nav-inner">
+            <a href="#top" className="brand"><span className="blink">❯</span>hariharan<span className="blink">_</span></a>
+            <div className="nav-links">
+              <a href="#impact"><span className="n">01</span>impact</a>
+              <a href="#experience"><span className="n">02</span>experience</a>
+              <a href="#projects"><span className="n">03</span>projects</a>
+              <a href="#skills"><span className="n">04</span>skills</a>
+              <a href="#contact"><span className="n">05</span>contact</a>
+            </div>
+            <div className="nav-right">
+              <span className="status"><i className="dot" />available for work</span>
+              <a className="btn btn-sm btn-ghost" href="Hariharan_Resume.pdf" target="_blank" rel="noreferrer">
+                {I.download({ style: { width: 15, height: 15 } })} resume.pdf
+              </a>
+            </div>
+          </div>
+        </nav>
+      );
+    }
+
+    function Hero() {
+      return (
+        <header className="hero wrap" id="top">
+          <div className="hero-grid">
+            <div>
+              <R className="hero-pre"><span className="prompt">❯</span> whoami</R>
+              <R as="h1" style={{ transitionDelay: ".05s" }}>Hariharan<span className="cursor" /></R>
+              <R className="roles" stagger style={{ transitionDelay: ".1s" }}>
+                <span className="role-tag"><b>+</b>Full Stack Developer</span>
+                <span className="role-tag"><b>+</b>Scalable Systems</span>
+                <span className="role-tag"><b>+</b>AI&nbsp;+&nbsp;Backend Engineering</span>
+              </R>
+              <R className="valueprop" style={{ transitionDelay: ".15s" }}>
+                Built high-scale healthcare systems and AI-driven platforms serving{" "}
+                <b>200+ concurrent users</b> with <b>99.9% uptime</b>.
+              </R>
+              <R className="hero-cta" style={{ transitionDelay: ".2s" }}>
+                <a className="btn btn-primary" href="#projects">View Projects {I.arrow({ className: "arr", style: { width: 16, height: 16 } })}</a>
+                <a className="btn btn-ghost" href="#experience">View Experience</a>
+                <a className="btn btn-ghost" href="#contact">Contact</a>
+              </R>
+              <R className="hero-meta" style={{ transitionDelay: ".24s" }}>
+                <a className="icon-btn" href={LINKS.github} target="_blank" rel="noreferrer" aria-label="GitHub">{I.github()}</a>
+                <a className="icon-btn" href={LINKS.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">{I.linkedin()}</a>
+                <a className="icon-btn" href={`mailto:${LINKS.email}`} aria-label="Email">{I.mail()}</a>
+              </R>
+            </div>
+            <R className="term" style={{ transitionDelay: ".18s" }}>
+              <div className="term-bar">
+                <span className="lights"><i /><i /><i /></span>
+                <span className="ttl">~/hariharan — profile.json</span>
+              </div>
+              <div className="term-body">
+                <div className="cmd"><span className="prompt">❯</span>cat profile.json</div>
+                <div className="code">{`{
+  `}<span className="k">"role"</span><span className="p">: </span><span className="s">"Full Stack Developer"</span><span className="p">,</span>{`
+  `}<span className="k">"focus"</span><span className="p">: </span><span className="s">"Scalable Backend · AI"</span><span className="p">,</span>{`
+  `}<span className="k">"stack"</span><span className="p">: [</span><span className="s">"ASP.NET Core"</span><span className="p">, </span><span className="s">"Angular"</span><span className="p">, </span><span className="s">"React"</span><span className="p">],</span>{`
+  `}<span className="k">"scale"</span><span className="p">: </span><span className="s">"200+ concurrent users"</span><span className="p">,</span>{`
+  `}<span className="k">"uptime"</span><span className="p">: </span><span className="s">"99.9%"</span><span className="p">,</span>{`
+  `}<span className="k">"records_per_day"</span><span className="p">: </span><span className="s">3000</span><span className="p">,</span>{`
+  `}<span className="k">"open_to"</span><span className="p">: [</span><span className="s">"Full Stack"</span><span className="p">, </span><span className="s">"Backend"</span><span className="p">, </span><span className="s">"AI"</span><span className="p">]</span>{`
+}`}</div>
+                <div className="cmd" style={{ marginTop: 8 }}><span className="prompt">❯</span><span className="term-cursor" /></div>
+              </div>
+            </R>
+          </div>
+        </header>
+      );
+    }
+
+    const METRICS = [
+      { n: 200, suf: "+", lbl: "concurrent users supported in production", tag: "scale" },
+      { n: 40, suf: "%", lbl: "API performance improvement", tag: "perf", pre: "↑ " },
+      { n: 3000, suf: "+", lbl: "surgical records processed daily", tag: "throughput" },
+      { n: 99.9, suf: "%", lbl: "uptime across healthcare systems", tag: "reliability", dec: 1 },
+    ];
+    function Impact() {
+      return (
+        <section id="impact">
+          <div className="wrap">
+            <R><Eyebrow idx="// 01">impact_highlights</Eyebrow></R>
+            <R className="metrics stagger">
+              {METRICS.map((m, i) => (
+                <div className="metric" key={i}>
+                  <div className="top"><span>0{i + 1}</span><span>{m.tag}</span></div>
+                  <div className="num">
+                    {m.pre && <span className="u">{m.pre}</span>}
+                    <span className="count" data-to={m.n} data-dec={m.dec || 0}>0</span>
+                    <span className="u">{m.suf}</span>
+                  </div>
+                  <div className="lbl">{m.lbl}</div>
+                </div>
+              ))}
+              <div className="metric metric-wide">
+                <div className="mw-l">
+                  <span className="mw-badge">AI · automation</span>
+                  <div>
+                    <h3>AI-powered CI/CD automation</h3>
+                    <p>Autonomous pipeline turning commits into production-ready releases — engineered, not configured.</p>
+                  </div>
+                </div>
+                <a className="btn btn-sm btn-ghost" href="#projects">See the build {I.arrow({ className: "arr", style: { width: 15, height: 15 } })}</a>
+              </div>
+            </R>
+          </div>
+        </section>
+      );
+    }
+
+    function Experience() {
+      const bullets = [
+        <>Architected <b>ASP.NET Core</b> APIs handling <b>200+ concurrent users</b> with <b>99.9% uptime</b> under sustained production load.</>,
+        <>Designed <b>15+ database schemas</b> in <b>Entity Framework</b> with strict ACID compliance and clean migration paths.</>,
+        <>Built <b>Angular</b> dashboards processing <b>3000+ surgical records/day</b> with real-time reporting.</>,
+        <>Reduced API latency by <b>40%</b> and improved query performance by <b>60%</b> through indexing and async I/O.</>,
+        <>Implemented <b>async pipelines</b> and repository patterns for high-throughput, maintainable backend systems.</>,
+      ];
+      const tags = ["ASP.NET Core", "C#", "Entity Framework", "Angular", "SQL Server", "Async I/O", "REST"];
+      return (
+        <section id="experience" className="sec-line">
+          <div className="wrap">
+            <R><Eyebrow idx="// 02">experience</Eyebrow></R>
+            <div className="xp">
+              <R className="xp-rail">
+                <div className="xp-node">
+                  <span className="xp-role">Full Stack Developer</span>
+                  <span className="xp-co">Aravind Eye Care Systems <span className="sub">· AuroiTech</span></span>
+                  <span className="xp-when"><i className="live" /> Sep 2024 — Present</span>
+                </div>
+              </R>
+              <R className="xp-body">
+                <div className="xp-list">
+                  {bullets.map((body, i) => (
+                    <div className="xp-item" key={i}>
+                      <span className="mk">{String(i + 1).padStart(2, "0")}</span>
+                      <p>{body}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="xp-tags">{tags.map((t) => <span className="tag" key={t}>{t}</span>)}</div>
+              </R>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    const PROJECTS = [
+      {
+        kind: "AI Systems", stack: ["Python", "LLM", "CI/CD"], name: "AutoPilot CI/CD Pipeline", feat: true, bullets: [
+          <>Autonomous pipeline that converts <b>commits → production-ready releases</b> with zero hand-holding.</>,
+          <>AI-based validation workflows that <b>cut manual intervention</b> across the release path.</>,
+          <>End-to-end <b>system design + automation</b> — gating, testing, and deploy in one loop.</>,
+          <>Built for repeatability: deterministic, observable, <b>recovery-safe</b> runs.</>,
+        ]
+      },
+      {
+        kind: "Enterprise BI", stack: [".NET", "Angular", "SQL"], name: "BI Tool — DBMS", bullets: [
+          <>Enterprise analytics system with <b>optimized data pipelines</b>.</>,
+          <>Built for <b>performance, reporting & scalability</b> at volume.</>,
+        ]
+      },
+      {
+        kind: "SaaS", stack: ["Next.js", "Git API"], name: "Git Archeologist", bullets: [
+          <>Extracts insight from <b>git history</b> at the repo level.</>,
+          <>Surfaces <b>contribution patterns</b> teams can act on.</>,
+        ]
+      },
+      {
+        kind: "AI Product", stack: ["Python", "LLM"], name: "Odin AI Chatbot", bullets: [
+          <>Chat interface with an <b>inbuilt LLM</b> integration.</>,
+          <>Demonstrates real <b>AI product</b> wiring, not a demo wrapper.</>,
+        ]
+      },
+      {
+        kind: "Frontend", stack: ["Angular"], name: "Editor Component", bullets: [
+          <>Custom <b>MS Word-like</b> rich text editor.</>,
+          <>Advanced formatting, built as a reusable component.</>,
+        ]
+      },
+      {
+        kind: "Web App", stack: ["React.js"], name: "RedBlogs", bullets: [
+          <>Blogging platform with full <b>content management</b>.</>,
+          <>Authoring, publishing and feed in one app.</>,
+        ]
+      },
+      {
+        kind: "Mobile", stack: ["React Native"], name: "Iyal Green Farming App", bullets: [
+          <>Community platform for <b>sustainable agriculture</b>.</>,
+          <>Connects growers around shared practices.</>,
+        ]
+      },
+    ];
+    function Projects() {
+      return (
+        <section id="projects" className="sec-line">
+          <div className="wrap">
+            <R><Eyebrow idx="// 03">selected_projects</Eyebrow></R>
+            <R as="h2" className="sec-title">Systems I've shipped.</R>
+            <R as="p" className="sec-sub" style={{ marginBottom: 38 }}>
+              Problem → tech → outcome. Ownership of real systems, from AI automation to enterprise analytics.
+            </R>
+            <R className="proj-grid stagger">
+              {PROJECTS.map((p, i) => (
+                <article className={`card${p.feat ? " card-feat" : ""}`} key={i}>
+                  <div className="card-head">
+                    <span className="card-kind"><span className="idx">{String(i + 1).padStart(2, "0")}</span>{p.kind}</span>
+                  </div>
+                  <h3>{p.name}</h3>
+                  <div className="stack">{p.stack.map((s) => <span className="chip" key={s}>{s}</span>)}</div>
+                  <ul className={p.feat ? "feat-body" : ""}>
+                    {p.bullets.map((b, j) => <li key={j}><span className="b">›</span><span>{b}</span></li>)}
+                  </ul>
+                  <div className="card-foot">
+                    <a className="card-link" href={LINKS.github} target="_blank" rel="noreferrer">
+                      view source {I.arrowUR({ style: { width: 14, height: 14 } })}
+                    </a>
+                    <span className="card-tag">{p.kind.toLowerCase().replace(/ /g, "_")}</span>
+                  </div>
+                </article>
+              ))}
+            </R>
+          </div>
+        </section>
+      );
+    }
+
+    const SKILLS = [
+      { gi: "01", g: "Backend Engineering", items: [".NET Core", "ASP.NET Web API", "C#", "Entity Framework"] },
+      { gi: "02", g: "Frontend Engineering", items: ["Angular", "React", "Next.js", "TypeScript"] },
+      { gi: "03", g: "Data & Databases", items: ["SQL Server", "T-SQL", "Query Optimization"] },
+      { gi: "04", g: "System Design", items: ["Async Processing", "Repository Pattern", "Dependency Injection"] },
+      { gi: "05", g: "Tools & Practice", items: ["Git", "Agile", "API Design"] },
+      { gi: "06", g: "AI & Platforms", items: ["LLM Integration", "Azure", "Google Cloud AI"] },
+    ];
+    function Skills() {
+      return (
+        <section id="skills" className="sec-line">
+          <div className="wrap">
+            <R><Eyebrow idx="// 04">skills</Eyebrow></R>
+            <R as="h2" className="sec-title" style={{ marginBottom: 32 }}>The stack, grouped.</R>
+            <R className="skills-grid">
+              {SKILLS.map((s) => (
+                <div className="skill-group" key={s.gi}>
+                  <div className="gh"><span className="gi">{s.gi}</span>{s.g}<span className="gn">{s.items.length} items</span></div>
+                  <div className="skill-list">{s.items.map((it) => <span className="skill" key={it}>{it}</span>)}</div>
+                </div>
+              ))}
+            </R>
+          </div>
+        </section>
+      );
+    }
+
+    const CERTS = [
+      ["Azure Fundamentals", "Microsoft"],
+      ["Google Cloud AI & ML", "Google"],
+      ["Google Analytics", "Google"],
+      ["Claude Certifications", "Anthropic"],
+      ["TalentNext", "Wipro"],
+      ["Full Stack Courses", "Udemy"],
+    ];
+    const HACKS = [
+      { name: "Vinsup Tech Tournament", prize: "₹21,000", win: true },
+      { name: "AMD Developer Hackathon 2026", prize: "" },
+      { name: "HCL GUVI AI Summit", prize: "" },
+      { name: "Devnovate Hackathon", prize: "" },
+    ];
+    function Cred() {
+      return (
+        <section id="credentials" className="sec-line">
+          <div className="wrap">
+            <R><Eyebrow idx="// 05">credentials</Eyebrow></R>
+            <R className="cred stagger">
+              <div className="cred-block">
+                <div className="bh"><span className="idx">$</span> hackathons — proof of initiative</div>
+                <div className="hack-list">
+                  {HACKS.map((h, i) => (
+                    <div className={`hack${h.win ? " win" : ""}`} key={i}>
+                      <span className="hk-mk">{h.win ? "WIN" : `0${i + 1}`}</span>
+                      <span className="hk-name">{h.name}</span>
+                      {h.win && <span className="win-badge">WINNER</span>}
+                      {h.prize && <span className="hk-prize">{h.prize}</span>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                <div className="cred-block">
+                  <div className="bh"><span className="idx">$</span> certifications</div>
+                  <div className="cert-list">
+                    {CERTS.map(([c, m], i) => (
+                      <div className="cert-item" key={i}><span className="mk">▪</span>{c}<span className="meta">{m}</span></div>
+                    ))}
+                  </div>
+                </div>
+                <div className="cred-block">
+                  <div className="bh"><span className="idx">$</span> education</div>
+                  <div className="edu-card">
+                    <span className="edu-deg">B.Tech IT — Honors</span>
+                    <span className="edu-school">Velammal College of Engineering</span>
+                    <div className="edu-stat"><span className="cg">8.39</span><span className="cl">/ 10 CGPA</span></div>
+                  </div>
+                </div>
+              </div>
+            </R>
+          </div>
+        </section>
+      );
+    }
+
+    function Contact() {
+      return (
+        <section id="contact" className="sec-line">
+          <div className="wrap contact">
+            <R><Eyebrow idx="// 06">contact</Eyebrow></R>
+            <R className="contact-inner">
+              <div className="contact-top">
+                <div>
+                  <h2>Let's build<br />something real.<span className="cursor" /></h2>
+                  <span className="open"><i className="dot" style={{ width: 7, height: 7 }} /> Open to Full Stack · Backend · AI Engineering roles</span>
+                </div>
+                <div className="contact-actions">
+                  <a className="btn btn-primary" href={`mailto:${LINKS.email}`}>{I.mail({ style: { width: 16, height: 16 } })} Email me</a>
+                  <a className="btn btn-ghost" href={LINKS.linkedin} target="_blank" rel="noreferrer">{I.linkedin({ style: { width: 16, height: 16 } })} LinkedIn</a>
+                  <a className="btn btn-ghost" href={LINKS.github} target="_blank" rel="noreferrer">{I.github({ style: { width: 16, height: 16 } })} GitHub</a>
+                </div>
+              </div>
+              <div className="contact-rows">
+                <a className="crow" href={`mailto:${LINKS.email}`}>{I.mail({ className: "ci" })}<span className="cl">email</span><span className="cv">{LINKS.email}</span></a>
+                <a className="crow" href={`tel:${LINKS.phone.replace(/ /g, "")}`}>{I.phone({ className: "ci" })}<span className="cl">phone</span><span className="cv">{LINKS.phone}</span></a>
+                <a className="crow" href={LINKS.github} target="_blank" rel="noreferrer">{I.github({ className: "ci" })}<span className="cl">github</span><span className="cv">Hariharan0-h</span></a>
+                <a className="crow" href={LINKS.linkedin} target="_blank" rel="noreferrer">{I.linkedin({ className: "ci" })}<span className="cl">linkedin</span><span className="cv">hariharan-m</span></a>
+              </div>
+            </R>
+            <footer className="foot">
+              <span>© 2026 Hariharan · built from scratch in HTML</span>
+              <a className="totop" href="#top">back to top {I.top({ style: { width: 14, height: 14 } })}</a>
+            </footer>
+          </div>
+        </section>
+      );
+    }
+
+    Object.assign(window, { Nav, Hero, Impact, Experience, Projects, Skills, Cred, Contact });
+  </script>
+
+  <!-- app -->
+  <script type="text/babel">
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "direction": "green",
+      "accent": "auto",
+      "fonts": "plex",
+      "motion": "moderate",
+      "density": "regular",
+      "scanlines": false
+    }/*EDITMODE-END*/;
+
+    const ACCENTS = {
+      auto: null,
+      green: ["#27e08a", "39,224,138", "#04130c"],
+      cyan: ["#38d6ff", "56,214,255", "#021318"],
+      amber: ["#ffb23e", "255,178,62", "#1a1206"],
+      violet: ["#a78bff", "167,139,255", "#0c0716"],
+      white: ["#f3f4f6", "240,242,245", "#0a0a0b"],
+    };
+    const FONTS = {
+      plex: ["'IBM Plex Mono',ui-monospace,monospace", "'IBM Plex Sans',system-ui,sans-serif"],
+      jetbrains: ["'JetBrains Mono',ui-monospace,monospace", "'IBM Plex Sans',system-ui,sans-serif"],
+      space: ["'Space Mono',ui-monospace,monospace", "'Space Grotesk',system-ui,sans-serif"],
+    };
+
+    function App() {
+      const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+      React.useEffect(() => {
+        const r = document.documentElement, b = document.body;
+        r.classList.add("no-trans");
+        r.dataset.theme = t.direction;
+        r.dataset.density = t.density;
+        r.dataset.motion = t.motion;
+        b.dataset.scanlines = t.scanlines ? "1" : "0";
+        const a = ACCENTS[t.accent];
+        if (a) {
+          r.style.setProperty("--accent", a[0]);
+          r.style.setProperty("--accent-glow", a[1]);
+          r.style.setProperty("--accent-ink", a[2]);
+        } else {
+          r.style.removeProperty("--accent");
+          r.style.removeProperty("--accent-glow");
+          r.style.removeProperty("--accent-ink");
+        }
+        const f = FONTS[t.fonts] || FONTS.plex;
+        r.style.setProperty("--font-mono", f[0]);
+        r.style.setProperty("--font-sans", f[1]);
+        void r.offsetWidth;
+        const tid = setTimeout(() => r.classList.remove("no-trans"), 60);
+        return () => clearTimeout(tid);
+      }, [t]);
+
+      React.useEffect(() => {
+        const motion = document.documentElement.dataset.motion;
+        const startCount = (el) => {
+          el.dataset.done = "1";
+          const to = parseFloat(el.dataset.to), dec = parseInt(el.dataset.dec || "0", 10);
+          if (motion === "minimal") { el.textContent = dec ? to.toFixed(dec) : to.toLocaleString(); return; }
+          const dur = 1400, t0 = performance.now(), ease = (x) => 1 - Math.pow(1 - x, 3);
+          const tick = (now) => {
+            const p = Math.min(1, (now - t0) / dur), v = to * ease(p);
+            el.textContent = dec ? v.toFixed(dec) : Math.round(v).toLocaleString();
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = dec ? to.toFixed(dec) : to.toLocaleString();
+          };
+          requestAnimationFrame(tick);
+        };
+        const lock = (el) => {
+          const kids = el.classList.contains("stagger") ? el.querySelectorAll(":scope > *") : [el];
+          kids.forEach((n) => { n.style.transition = "none"; n.style.opacity = "1"; n.style.transform = "none"; });
+          void el.offsetWidth;
+          kids.forEach((n) => { n.style.transition = ""; n.style.transform = ""; });
+        };
+        const check = () => {
+          const vh = window.innerHeight || document.documentElement.clientHeight;
+          document.querySelectorAll(".reveal:not(.vis),.stagger:not(.vis)").forEach((el) => {
+            const r = el.getBoundingClientRect();
+            if (r.top < vh * 0.92 && r.bottom > -40) { el.classList.add("vis"); setTimeout(() => lock(el), 780); }
+          });
+          document.querySelectorAll(".count:not([data-done])").forEach((el) => {
+            const r = el.getBoundingClientRect();
+            if (r.top < vh * 0.85 && r.bottom > 0) startCount(el);
+          });
+        };
+        const nav = document.getElementById("nav");
+        const onScroll = () => { check(); if (nav) nav.dataset.stuck = window.scrollY > 12 ? "1" : "0"; };
+        check();
+        requestAnimationFrame(check);
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", check);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(check);
+        const safety = setTimeout(() => document.querySelectorAll(".reveal,.stagger").forEach((e) => { e.classList.add("vis"); lock(e); }), 2400);
+        return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", check); clearTimeout(safety); };
+      }, []);
+
+      return (
+        <div className="app">
+          <Nav />
+          <Hero />
+          <main>
+            <Impact />
+            <Experience />
+            <Projects />
+            <Skills />
+            <Cred />
+            <Contact />
+          </main>
+          <TweaksPanel title="Tweaks">
+            <TweakSection label="Direction" />
+            <TweakRadio label="Aesthetic" value={t.direction}
+              options={[{ value: "green", label: "Green" }, { value: "slate", label: "Mono" }, { value: "amber", label: "Amber" }]}
+              onChange={(v) => setTweak("direction", v)} />
+            <TweakColor label="Accent" value={matchAccentSwatch(t.accent)}
+              options={["auto", "green", "cyan", "amber", "violet", "white"].map(matchAccentSwatch)}
+              onChange={(v) => setTweak("accent", swatchToKey(v))} />
+            <TweakSection label="Typography" />
+            <TweakSelect label="Font pairing" value={t.fonts}
+              options={[{ value: "plex", label: "IBM Plex Mono / Sans" }, { value: "jetbrains", label: "JetBrains Mono / Plex" }, { value: "space", label: "Space Mono / Grotesk" }]}
+              onChange={(v) => setTweak("fonts", v)} />
+            <TweakSection label="Layout & Motion" />
+            <TweakRadio label="Density" value={t.density} options={["compact", "regular", "comfy"]} onChange={(v) => setTweak("density", v)} />
+            <TweakRadio label="Motion" value={t.motion}
+              options={[{ value: "minimal", label: "Min" }, { value: "moderate", label: "Med" }, { value: "expressive", label: "Max" }]}
+              onChange={(v) => setTweak("motion", v)} />
+            <TweakToggle label="CRT scanlines" value={t.scanlines} onChange={(v) => setTweak("scanlines", v)} />
+          </TweaksPanel>
+        </div>
+      );
+    }
+
+    function matchAccentSwatch(key) {
+      return { auto: "#7d8590", green: "#27e08a", cyan: "#38d6ff", amber: "#ffb23e", violet: "#a78bff", white: "#f3f4f6" }[key];
+    }
+    const SWATCH_TO_KEY = { "#7d8590": "auto", "#27e08a": "green", "#38d6ff": "cyan", "#ffb23e": "amber", "#a78bff": "violet", "#f3f4f6": "white" };
+    function swatchToKey(hex) { return SWATCH_TO_KEY[String(hex).toLowerCase()] || "auto"; }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+
+</html>
